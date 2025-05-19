@@ -4,6 +4,11 @@
 GITHUB_TOKEN=$1
 GIPHY_API_KEY=$2
 
+if [ -z "$GITHUB_TOKEN" ] || [ -z "$GIPHY_API_KEY" ]; then
+  echo "Error: GITHUB_TOKEN and GIPHY_API_KEY must be provided."
+  exit 1
+fi
+
 #Get the pull request number from the GitHub event payload
 pull_request_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 echo PR Number - $pull_request_number
@@ -24,3 +29,4 @@ comment_response=$(curl -sX POST -H "Authorization: token $GITHUB_TOKEN" \
 
 #Extract and print the comment URL from the comment response
 comment_url=$(echo "$comment_response" | jq --raw-output '.html_url')
+echo "Comment posted at: $comment_url"
