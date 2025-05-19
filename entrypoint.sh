@@ -25,7 +25,7 @@ echo GIPHY_URL - $gif_url
 comment_response=$(curl -sX POST -H "Authorization: token $GITHUB_TOKEN" \
     -H "Accept: application/vnd.github.v3+json" \
     -d "{\"body\": \"### PR - #$pull_request_number. \n ### Thank you for this contribution! \n ![GIF]($gif_url) \"}" \
-    "https://api.github.com/repos$GITHUB_REPOSITORY/issues/$pull_request_number/comments")
+    "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$pull_request_number/comments")
 
 #Extract and print the comment URL from the comment response
 comment_url=$(echo "$comment_response" | jq --raw-output '.html_url')
